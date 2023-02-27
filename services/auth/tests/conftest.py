@@ -67,9 +67,9 @@ class AuthActions(object):
     def userpass_login(self, email="", password="", auth_type="Basic"):
         if auth_type is not None:
             credentials = b64encode(str.encode(f"{email}:{password}")).decode("utf-8")
-            return self._client.post("/method/userpass/login", headers={"Authorization": f"{auth_type} {credentials}"})
+            return self._client.post("/login", headers={"Authorization": f"{auth_type} {credentials}"})
         else:
-            return self._client.post("/method/userpass/login")
+            return self._client.post("/login")
 
     def validate(self, token="", auth_type="Bearer"):
         if auth_type is not None:
