@@ -14,11 +14,10 @@ spec:
     spec:
       containers:
         - name: auth
-          image: sergiorivera50/thesis-auth:latest
+          image: sergiorivera50/sigma-auth:latest
           volumeMounts:
-            - name: data
-              mountPath: "/auth/data"
-              subPath: auth.db
+            - mountPath: /auth/data
+              name: data
           ports:
             - containerPort: 5000
           envFrom:
