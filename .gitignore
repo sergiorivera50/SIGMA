@@ -1,0 +1,10 @@
+.DS_Store
+.idea
+
+data
+models
+notebooks/.ipynb_checkpoints
+
+services/**/data
+services/**/venv
+services/**/*.data

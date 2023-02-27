@@ -1,0 +1,57 @@
+Dissertation Outline:
+    An exploration of synthetic image generation
+    techniques using Generative Adversarial Networks
+    deployed as containerised microservices
+
+Part I: Generative Adversarial Nets
+
+1. Deep Learning Fundamentals
+    A. Mathematical Background
+        - Optimisation Techniques
+        - Objective & Loss Functions
+    B. Artificial Neural Networks
+        - Basic Perceptron
+        - Deep Neural Networks
+        - Backpropagation
+        - Learning Strategies
+    C. Generative Adversarial Networks
+        - The Discriminator
+        - The Generator
+        - The Objetive Function
+
+2. Exploring Architectures
+    A. Basic GAN
+    B. Deep Convolutional GAN
+    C. Conditional GAN
+    D. Wassertein GAN
+
+3. Autoencoders
+    A. Basic Implementation
+    B. Variational Autoencoder
+    C. Lossy Data Compression
+    D. Autoencoder as Generator
+
+4. Limitations and Attack Vectors
+    A. Mode Collapse
+    B. Overfitting
+    C. Label Flipping
+    D. Gradient Vanishing/Explosion
+    E. Model Inversion
+    F. Adversarial Examples
+        - Fast Gradient Sign Method
+        - Projected Gradient Descent
+        - Carlini and Wagner
+        - DeepFool
+        - Universal Adversarial Perturbations
+        - Adversarial Training
+
+5. Applications
+
+Part II: MLOps with Containers
+
+1. Introduction to MLOps
+    A. Images and Containers
+    B. Orchestration Mechanisms
+    C. Machine Learning Operations
+
+2. Infrastructure Automation

@@ -1,0 +1,12 @@
+name: tf-metal
+channels:
+  - apple
+  - conda-forge
+dependencies:
+  - python=3.8
+  - pip
+  - tensorflow-deps
+  - ipykernel
+  - pip:  # PyPi packages
+    - tensorflow-macos==2.9.2
+    - tensorflow-metal==0.5.0  # optional (GPU acceleration)
