@@ -8,4 +8,4 @@ Synthetic Image Generation Modeling is a technique used in computer vision to cr
 
 ## What does SIGMA do?
 
-SIGMA provides a microservice infrastructure that serves pretrained Generative Adversarial models. SIGMA takes care of scaling and distributing the requests to the appropriate backends, which then use the pretrained GAN models to generate the requested images. The project is designed to be flexible, scalable, and easy to use, making it an ideal choice for engineers who want to incorporate synthetic images into their projects without having to train their own GANs or setup their backend infrastructure.
+SIGMA provides a microservice infrastructure that serves pretrained generative adversarial models. SIGMA takes care of scaling and distributing the requests to the appropriate backends, which then use the pretrained GAN models to generate the requested images. The project is designed to be flexible, scalable, and easy to use, making it an ideal choice for engineers who want to incorporate synthetic images into their projects without having to train their own GANs or setup their backend infrastructure.
