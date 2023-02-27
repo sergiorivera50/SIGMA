@@ -15,8 +15,9 @@ RUN pip install --no-cache-dir -r /auth/requirements.txt
 COPY ./__init__.py /auth
 COPY ./app /auth/app
 
-# Create + Initialise Database
-RUN mkdir /auth/data && flask init-data
+# Create database path
+# Later, manually initialise with -> flask init-data
+RUN mkdir /auth/data
 
 EXPOSE 5000
 
