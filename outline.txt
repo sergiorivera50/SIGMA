@@ -1,9 +1,8 @@
-Dissertation Outline:
-    An exploration of synthetic image generation
-    techniques using Generative Adversarial Networks
-    deployed as containerised microservices
+[Dissertation Outline]
+    SIGMA: A Microservice Automation Framework for
+    Scalable Adversarial Synthetic Image Generation.
 
-Part I: Generative Adversarial Nets
+[Part I] Adversarial Synthetic Image Generation
 
 1. Deep Learning Fundamentals
     A. Mathematical Background
@@ -19,11 +18,25 @@ Part I: Generative Adversarial Nets
         - The Generator
         - The Objetive Function
 
-2. Exploring Architectures
-    A. Basic GAN
-    B. Deep Convolutional GAN
-    C. Conditional GAN
-    D. Wassertein GAN
+2. Generative Adversarial Networks
+    A. Fundamental Architecture
+    B. Implementation and Variants
+        - Deep Convolutional GAN
+        - Conditional GAN
+        - Wassertein GAN
+    C. Limitations and Attack Vectors
+        - Mode Collapse
+        - Overfitting
+        - Label Flipping
+        - Gradient Vanishing/Explosion
+        - Model Inversion
+        - Adversarial Examples
+            - Fast Gradient Sign Method
+            - Projected Gradient Descent
+            - Carlini and Wagner
+            - DeepFool
+            - Universal Adversarial Perturbations
+            - Adversarial Training
 
 3. Autoencoders
     A. Basic Implementation
@@ -31,27 +44,53 @@ Part I: Generative Adversarial Nets
     C. Lossy Data Compression
     D. Autoencoder as Generator
 
-4. Limitations and Attack Vectors
-    A. Mode Collapse
-    B. Overfitting
-    C. Label Flipping
-    D. Gradient Vanishing/Explosion
-    E. Model Inversion
-    F. Adversarial Examples
-        - Fast Gradient Sign Method
-        - Projected Gradient Descent
-        - Carlini and Wagner
-        - DeepFool
-        - Universal Adversarial Perturbations
-        - Adversarial Training
+4. Applications
 
-5. Applications
+[Part II] The Synthetic Image Generation Modeling API
 
-Part II: MLOps with Containers
-
-1. Introduction to MLOps
+1. Infrastructure Automation
     A. Images and Containers
     B. Orchestration Mechanisms
-    C. Machine Learning Operations
+    C. Cloud Computing Platforms
+        - Amazon Web Services (AWS)
+        - Google Cloud Platform (GCP)
+        - Microsoft Azure
 
-2. Infrastructure Automation
+2. Microservices Architecture
+    A. Advantages and Disadvantages
+    B. Design Principles
+    C. Service Discovery
+    D. Load Balancing
+    E. Fault Tolerance
+    F. Scalability
+
+3. Universal SIGMA
+    A. Overview and Design
+    B. Microservices Implementation
+    C. Service Orchestration
+    D. Deployment Strategies
+    E. Authorization and Authentication
+    F. Scaling and Load Balancing
+    E. SIGMA Dashboard
+
+[Part III] Conclusion
+
+1. Evaluation and Results
+    A. Experimental Setup
+    B. Performance Metrics
+    C. Comparative Analysis
+    D. Case Studies
+
+2. Ethical Implications
+    A. Training Bias
+    B. Deepfakes
+    C. Privacy
+    D. Intellectual Property
+    E. Potential Misuse
+    F. Accountability
+
+3. Conclusion and Future Work
+    A. Contributions
+    B. Limitations and Future Directions
+    C. Implications and Applications
+    D. Lessons Learned and Recommendations
