@@ -2,6 +2,12 @@
     SIGMA: A Microservice Automation Framework for
     Scalable Adversarial Synthetic Image Generation.
 
+[Note]
+    At some point (the beginning), I will have to
+    make a case for the benefits of using containers
+    in adversarial synthetic image generation (the
+    core reason for the existence of this project).
+
 [Part I] Adversarial Synthetic Image Generation
 
 1. Deep Learning Fundamentals
