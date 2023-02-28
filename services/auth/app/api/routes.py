@@ -25,15 +25,15 @@ def login():
     auth = request.authorization
     cursor = get_db()
     result = cursor.execute(
-        "SELECT email, password FROM user WHERE email=?",
+        "SELECT email, password, role FROM user WHERE email=?",
         (auth.username,)
     ).fetchone()
 
     # Authenticate user (if provided details match data values)
     if result is not None:
-        email, password = result[0], result[1]
+        email, password, role = result[0], result[1], result[2]
         if auth.username == email and auth.password == password:
-            return createJWT(auth.username, current_app.config["JWT_SECRET"])
+            return createJWT(auth.username, role, current_app.config["JWT_SECRET"])
         else:
             return "Invalid Credentials", 401
     else:
