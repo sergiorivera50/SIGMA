@@ -9,3 +9,14 @@ Synthetic Image Generation Modeling is a technique used in computer vision to cr
 ## What does SIGMA do?
 
 SIGMA provides a microservice infrastructure that serves pre-trained generative adversarial models. SIGMA takes care of scaling and distributing the requests to the appropriate backends, using the pre-trained GAN models to generate the requested images. The project is designed to be flexible, scalable, and easy to use, making it an ideal choice for engineers who want to incorporate synthetic images into their projects without training their own GANs or setting up their backend infrastructure.
+
+# Local Installation
+
+1. Deploy Kubernetes manifests.
+```bash
+source scripts/deploy.sh
+```
+2. Initialise the authorization database.
+```bash
+kubectl exec $(kubectl get pods -l app=auth -o jsonpath='{.items[0].metadata.name}') -- flask init-data
+```
