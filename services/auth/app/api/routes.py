@@ -1,16 +1,17 @@
 import jwt
-from flask import Blueprint, request, current_app
+from flask import Blueprint, request, current_app, g
 
 from auth.app.db import get_db
 from auth.app.util.tokens import createJWT
 from auth.app.util.headers import isAuthType
+from auth.app.util.decorators import requires_auth
 
 bp = Blueprint("auth", __name__)
 
 
 @bp.route("/login", methods=["POST"])
 def login():
-    """Log in a user via Basic Authorization by creating an encoded JWT."""
+    """ Log in a user via Basic Authorization by creating an encoded JWT. """
 
     # Enforce "Authorization" header
     auth_header = request.headers.get("Authorization")
@@ -41,28 +42,28 @@ def login():
 
 
 @bp.route("/validate", methods=["POST"])
+@requires_auth()
 def validate():
-    """Validate an encoded JWT."""
+    """ Decode a JWT with secret via Bearer token. """
+    return g.user, 200
 
-    # Enforce "Authorization" header
-    auth_header = request.headers.get("Authorization")
-    if not auth_header:
-        return "Missing Credentials", 401
 
-    # Ensure only "Bearer" auth type is allowed
-    if not isAuthType(auth_header, "Bearer"):
-        return "Invalid Authorization Type", 400
-
-    token = auth_header.split(" ")[1]  # select "<token>" from "Bearer <token>"
-
-    # Attempt to decode JWT using secret
+@bp.route("/register", methods=["POST"])
+@requires_auth(role="superuser")
+def register():
+    """ Register a new user. """
     try:
-        decoded = jwt.decode(
-            token, current_app.config["JWT_SECRET"], algorithms=["HS256"]
-        )
-    except jwt.exceptions.DecodeError:
-        return "Not Authorized", 403
+        body = request.get_json()
+        email, password = body.get("email"), body.get("password")
+
+        if not email or not password:
+            return "Email and password are required.", 400
+
+        cursor = get_db()
+        cursor.execute("INSERT INTO user (email, password, role) VALUES (?, ?, ?)", (email, password, "regular"))
+        cursor.commit()
+
+        return "User created successfully", 201
     except Exception as e:
         print(f"Unexpected Error: {e}")
-        return f"Unexpected Error Occured", 500
-    return decoded, 200
+        return f"Unexpected Error Occurred", 500
