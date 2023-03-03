@@ -1,3 +1,4 @@
+import json
 import os
 import tempfile
 from base64 import b64encode
@@ -53,26 +54,53 @@ class DataActions(object):
     def __init__(self, app):
         self._app = app
 
-    def fetch_userpass_credentials(self):
+    def fetch_credentials(self, role="regular"):
         with self._app.app_context():
-            res = get_db().execute("SELECT email, password FROM user LIMIT 1").fetchone()
-            email, password = res[0], res[1]
-            return email, password
+            cursor = get_db().cursor()
+            cursor.execute(
+                "SELECT email, password FROM user WHERE role=? LIMIT 1", (role,)
+            )
+            res = cursor.fetchone()
+            if res:
+                email, password = res[0], res[1]
+                return email, password
+            else:
+                raise Exception(f"No user available with role {role}")
+
+    def fetch_user(self, identifier):
+        with self._app.app_context():
+            cursor = get_db().cursor()
+            cursor.execute(
+                "SELECT * FROM user WHERE role=? OR email=? LIMIT 1",
+                (identifier, identifier),
+            )
+            res = cursor.fetchone()
+            if res:
+                return res
+            else:
+                raise Exception(f"No user available with role or username {identifier}")
 
 
 class AuthActions(object):
     def __init__(self, client):
         self._client = client
 
-    def userpass_login(self, email="", password="", auth_type="Basic"):
-        if auth_type is not None:
-            credentials = b64encode(str.encode(f"{email}:{password}")).decode("utf-8")
-            return self._client.post("/login", headers={"Authorization": f"{auth_type} {credentials}"})
-        else:
+    def login(self, email="", password="", auth_type="Basic"):
+        if auth_type is None:
             return self._client.post("/login")
+        credentials = b64encode(str.encode(f"{email}:{password}")).decode("utf-8")
+        return self._client.post("/login", headers={"Authorization": f"{auth_type} {credentials}"})
 
     def validate(self, token="", auth_type="Bearer"):
-        if auth_type is not None:
-            return self._client.post("/validate", headers={"Authorization": f"{auth_type} {token}"})
-        else:
+        if auth_type is None:
             return self._client.post("/validate")
+        return self._client.post("/validate", headers={"Authorization": f"{auth_type} {token}"})
+
+    def register(self, token="", auth_type="Bearer", data=None):
+        if auth_type is None:
+            return self._client.post("/register", data=json.dumps(data))
+        headers = {
+            "Authorization": f"{auth_type} {token}",
+            "Content-Type": "application/json"
+        }
+        return self._client.post("/register", headers=headers, data=json.dumps(data))
