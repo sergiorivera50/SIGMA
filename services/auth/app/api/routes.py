@@ -1,4 +1,3 @@
-import jwt
 from flask import Blueprint, request, current_app, g
 
 from auth.app.db import get_db
