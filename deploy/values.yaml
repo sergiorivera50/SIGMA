@@ -1,0 +1,7 @@
+auth:
+  enabled: true
+  replicaCount: 1
+
+registry:
+  enabled: true
+  replicaCount: 1

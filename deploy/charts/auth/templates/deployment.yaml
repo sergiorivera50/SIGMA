@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: auth
+  name: sigma-{{ .Chart.Name }}-server
 spec:
-  replicas: 1
+  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       app: auth
@@ -13,17 +13,17 @@ spec:
         app: auth
     spec:
       containers:
-        - name: auth
+        - name: auth-server
           image: sergiorivera50/sigma-auth:latest
           volumeMounts:
             - mountPath: /auth/data
               name: data
           ports:
-            - containerPort: 5000
+            - containerPort: 4000
           envFrom:
             - secretRef:
-                name: auth-secret
+                name: sigma-{{ .Chart.Name }}-jwt-secret
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: auth-pvc
+            claimName: sigma-{{ .Chart.Name }}-pvc

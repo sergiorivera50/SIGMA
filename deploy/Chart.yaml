@@ -1,0 +1,18 @@
+apiVersion: v2
+name: sigma
+version: 0.1.0
+description: The SIGMA automation framework
+type: application
+keywords:
+  - sigma
+maintainers:
+  - name: Sergio Rivera
+    email: sriveralopez50@gmail.com
+    url: https://www.sergiorivera.dev
+dependencies:
+  - name: auth
+    version: 0.1.0
+    condition: auth.enabled
+  - name: registry
+    version: 0.1.0
+    condition: registry.enabled

@@ -1,0 +1,12 @@
+apiVersion: v2
+name: auth
+version: 0.1.0
+description: Authorization service for the SIGMA automation framework
+type: application
+keywords:
+  - authorization
+  - sigma
+maintainers:
+  - name: Sergio Rivera
+    email: sriveralopez50@gmail.com
+    url: https://www.sergiorivera.dev

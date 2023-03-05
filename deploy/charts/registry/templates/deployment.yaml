@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sigma-{{ .Chart.Name }}-server
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: registry
+  template:
+    metadata:
+      labels:
+        app: registry
+    spec:
+      containers:
+        - name: registry-server
+          image: sergiorivera50/sigma-registry:latest
+          ports:
+            - containerPort: 5000
+          envFrom:
+            - secretRef:
+                name: sigma-{{ .Chart.Name }}-secret
