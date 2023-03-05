@@ -12,9 +12,9 @@ SIGMA provides a microservice infrastructure that serves pre-trained generative 
 
 # Local Installation
 
-1. Deploy Kubernetes manifests.
+1. Install SIGMA via Helm chart.
 ```bash
-source scripts/deploy.sh
+helm install sigma deploy/
 ```
 2. Initialise the authorization database.
 ```bash
