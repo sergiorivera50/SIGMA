@@ -1,0 +1,43 @@
+version: '3'
+services:
+  auth:
+    build: services/auth
+    ports:
+      - "4000:4000"
+    command: gunicorn --bind 0.0.0.0:4000 --reload --log-level=info,error app:create_app()
+    volumes:
+      - ./services/auth/app:/auth/app
+      - ./services/auth/data:/auth/data
+      - ./services/auth/requirements.txt:/auth/requirements.txt
+      - ./services/auth/__init__.py:/auth/__init__.py
+    env_file:
+      - "services/auth/.env"
+
+  registry:
+    build: services/registry
+    ports:
+      - "5000:5000"
+    command: gunicorn --bind 0.0.0.0:5000 --reload --log-level=info,error app:create_app()
+    volumes:
+      - ./services/registry/app:/registry/app
+      - ./services/registry/requirements.txt:/registry/requirements.txt
+      - ./services/registry/__init__.py:/registry/__init__.py
+    env_file:
+      - "services/registry/.env"
+
+  inference:
+    build: services/inference
+    ports:
+      - "3000:3000"
+    command: gunicorn --bind 0.0.0.0:3000 --reload --log-level=debug,info,error app:create_app()
+    volumes:
+      - ./services/inference/app:/inference/app
+      - ./services/inference/requirements.txt:/inference/requirements.txt
+      - ./services/inference/__init__.py:/inference/__init__.py
+    env_file:
+      - "services/inference/.env"
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
