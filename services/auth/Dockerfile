@@ -6,6 +6,9 @@ RUN apt-get update \
   build-essential sqlite3 default-libmysqlclient-dev \
   && pip install --no-cache-dir --upgrade pip
 
+# Set PYTHONPATH environment variable
+ENV PYTHONPATH "${PYTHONPATH}:/"
+
 # Install Python Dependencies
 WORKDIR /auth
 COPY ./requirements.txt /auth
@@ -19,6 +22,6 @@ COPY ./app /auth/app
 # Later, manually initialise with -> flask init-data
 RUN mkdir /auth/data
 
-EXPOSE 5000
+EXPOSE 4000
 
-CMD ["flask", "run", "--host", "0.0.0.0", "--port", "5000"]
+CMD ["gunicorn", "-b", "0.0.0.0:4000", "app:create_app()"]
