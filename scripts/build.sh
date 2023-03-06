@@ -11,8 +11,10 @@ SERVICES_DIR="$BASE_DIR/services"
 docker build -t $DOCKERHUB_ACCOUNT/sigma-auth:latest $SERVICES_DIR/auth
 docker build -t $DOCKERHUB_ACCOUNT/sigma-registry:latest $SERVICES_DIR/registry
 docker build -t $DOCKERHUB_ACCOUNT/sigma-inference:latest $SERVICES_DIR/inference
+docker build -t $DOCKERHUB_ACCOUNT/sigma-controller:latest $SERVICES_DIR/controller
 
 # Push all Docker images
 docker push $DOCKERHUB_ACCOUNT/sigma-auth:latest
 docker push $DOCKERHUB_ACCOUNT/sigma-registry:latest
 docker push $DOCKERHUB_ACCOUNT/sigma-inference:latest
+docker push $DOCKERHUB_ACCOUNT/sigma-controller:latest
