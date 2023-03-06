@@ -17,6 +17,15 @@ spec:
           image: sergiorivera50/sigma-inference
           ports:
             - containerPort: 3000
+          env:
+            - name: MODEL_ID
+              value: "{model_id}"
+            - name: REGISTRY_SVC_HOST
+              value: "http://sigma-registry-service.{namespace}.svc.cluster.local:5000"
+            - name: REDIS_HOST
+              value: "{name}-redis.{namespace}.svc.cluster.local"
+            - name: REDIS_PORT
+              value: "6379"
           envFrom:
             - secretRef:
-                name: inference-backend-secret
+                name: mongodb-secret

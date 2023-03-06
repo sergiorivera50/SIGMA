@@ -22,14 +22,9 @@ def create_fn(spec, name, namespace, logger, **kwargs):
     redis_service_manifest = parse_manifest("redis-service.yaml",
                                             name=name)
     deployment_manifest = parse_manifest("deployment.yaml",
-                                         name=name)
-    secret_manifest = parse_manifest("secret.yaml",
-                                     model_id=spec.get("modelId"),
-                                     registry_host=spec.get("registryHost"),
-                                     mongo_host=spec.get("mongoHost"),
-                                     mongo_database=spec.get("mongoDatabase"),
-                                     name=name,
-                                     namespace=namespace)
+                                         model_id=spec.get("modelId"),
+                                         name=name,
+                                         namespace=namespace)
     service_manifest = parse_manifest("service.yaml",
                                       name=name)
 
@@ -37,8 +32,7 @@ def create_fn(spec, name, namespace, logger, **kwargs):
         redis_deployment_manifest,
         redis_service_manifest,
         deployment_manifest,
-        service_manifest,
-        secret_manifest
+        service_manifest
     ])
 
     apps_api = kubernetes.client.AppsV1Api()
@@ -62,12 +56,6 @@ def create_fn(spec, name, namespace, logger, **kwargs):
     )
     logger.info(f"Deployment created.")
 
-    secret_obj = core_api.create_namespaced_secret(
-        namespace=namespace,
-        body=secret_manifest
-    )
-    logger.info(f"Secret created.")
-
     service_obj = core_api.create_namespaced_service(
         namespace=namespace,
         body=service_manifest
@@ -78,7 +66,6 @@ def create_fn(spec, name, namespace, logger, **kwargs):
         "redis-deployment-name": redis_deployment_obj.metadata.name,
         "redis-service-name": redis_service_obj.metadata.name,
         "deployment-name": deployment_obj.metadata.name,
-        "secret-name": secret_obj.metadata.name,
         "service-name": service_obj.metadata.name
     }
 

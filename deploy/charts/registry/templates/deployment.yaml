@@ -12,6 +12,7 @@ spec:
       labels:
         app: registry
     spec:
+      serviceAccountName: sigma-registry-account
       containers:
         - name: registry-server
           image: sergiorivera50/sigma-registry:latest
@@ -19,4 +20,4 @@ spec:
             - containerPort: 5000
           envFrom:
             - secretRef:
-                name: sigma-{{ .Chart.Name }}-secret
+                name: mongodb-secret
