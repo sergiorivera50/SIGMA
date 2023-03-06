@@ -4,12 +4,14 @@ services:
     build: services/auth
     ports:
       - "4000:4000"
-    command: gunicorn --bind 0.0.0.0:4000 --reload --log-level=info,error app:create_app()
+    command: flask run --host 0.0.0.0 --port 4000
     volumes:
       - ./services/auth/app:/auth/app
       - ./services/auth/data:/auth/data
       - ./services/auth/requirements.txt:/auth/requirements.txt
-      - ./services/auth/__init__.py:/auth/__init__.py
+      - ./services/auth/handlers.py:/auth/handlers.py
+    environment:
+      FLASK_DEBUG: 1
     env_file:
       - "services/auth/.env"
 
@@ -17,11 +19,13 @@ services:
     build: services/registry
     ports:
       - "5000:5000"
-    command: gunicorn --bind 0.0.0.0:5000 --reload --log-level=info,error app:create_app()
+    command: flask run --host 0.0.0.0 --port 5000
     volumes:
       - ./services/registry/app:/registry/app
       - ./services/registry/requirements.txt:/registry/requirements.txt
-      - ./services/registry/__init__.py:/registry/__init__.py
+      - ./services/registry/handlers.py:/registry/handlers.py
+    environment:
+      FLASK_DEBUG: 1
     env_file:
       - "services/registry/.env"
 
@@ -29,11 +33,14 @@ services:
     build: services/inference
     ports:
       - "3000:3000"
-    command: gunicorn --bind 0.0.0.0:3000 --reload --log-level=debug,info,error app:create_app()
+    command: flask run --host 0.0.0.0 --port 3000
     volumes:
       - ./services/inference/app:/inference/app
       - ./services/inference/requirements.txt:/inference/requirements.txt
-      - ./services/inference/__init__.py:/inference/__init__.py
+      - ./services/inference/handlers.py:/inference/handlers.py
+    environment:
+      MODEL_ID: 6405c0d3fae11e44160f719b
+      FLASK_DEBUG: 1
     env_file:
       - "services/inference/.env"
 
