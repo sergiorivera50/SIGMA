@@ -19,6 +19,8 @@ def create_app(test_config=None):
             REGISTRY_SVC_HOST=os.environ.get("REGISTRY_SVC_HOST"),
             MONGODB_HOST=os.environ.get("MONGODB_HOST"),
             DATABASE=os.environ.get("DATABASE") or "sigma",
+            REDIS_HOST=os.environ.get("REDIS_HOST"),
+            REDIS_PORT=os.environ.get("REDIS_PORT") or 6379
         )
     else:
         app.config.update(test_config)
@@ -27,6 +29,7 @@ def create_app(test_config=None):
     assert app.config.get("REGISTRY_SVC_HOST"), "Registry service host has not been configured"
     assert app.config.get("MONGODB_HOST"), "MongoDB host has not been configured"
     assert app.config.get("DATABASE"), "Database has not been selected"
+    assert app.config.get("REDIS_HOST"), "Redis host has not been configured"
 
     with app.app_context():
         # Register endpoints

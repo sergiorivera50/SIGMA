@@ -19,7 +19,10 @@ def get_db():
 
 
 def get_cache():
-    return redis.Redis(host="redis", port=6379, db=0)
+    return redis.Redis(
+        host=current_app.config.get("REDIS_HOST"),
+        port=current_app.config.get("REDIS_PORT"),
+        db=0)
 
 
 def init_cache(model_id):
