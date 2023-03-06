@@ -1,5 +1,17 @@
 version: '3'
 services:
+  gateway:
+    build: services/gateway
+    ports:
+      - "8000:8000"
+    command: flask run --host 0.0.0.0 --port 8000
+    volumes:
+      - ./services/gateway/app:/gateway/app
+      - ./services/gateway/requirements.txt:/gateway/requirements.txt
+    environment:
+      FLASK_DEBUG: 1
+    env_file:
+      - "services/gateway/.env"
   auth:
     build: services/auth
     ports:
@@ -9,12 +21,10 @@ services:
       - ./services/auth/app:/auth/app
       - ./services/auth/data:/auth/data
       - ./services/auth/requirements.txt:/auth/requirements.txt
-      - ./services/auth/handlers.py:/auth/handlers.py
     environment:
       FLASK_DEBUG: 1
     env_file:
       - "services/auth/.env"
-
   registry:
     build: services/registry
     ports:
@@ -23,12 +33,10 @@ services:
     volumes:
       - ./services/registry/app:/registry/app
       - ./services/registry/requirements.txt:/registry/requirements.txt
-      - ./services/registry/handlers.py:/registry/handlers.py
     environment:
       FLASK_DEBUG: 1
     env_file:
       - "services/registry/.env"
-
   inference:
     build: services/inference
     ports:
@@ -37,13 +45,11 @@ services:
     volumes:
       - ./services/inference/app:/inference/app
       - ./services/inference/requirements.txt:/inference/requirements.txt
-      - ./services/inference/handlers.py:/inference/handlers.py
     environment:
-      MODEL_ID: 6405c0d3fae11e44160f719b
+      MODEL_ID: 64060f8e547d5d27345c87cc
       FLASK_DEBUG: 1
     env_file:
       - "services/inference/.env"
-
   redis:
     image: redis:latest
     ports:

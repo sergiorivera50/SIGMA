@@ -19,3 +19,6 @@ dependencies:
   - name: controller
     version: 0.1.0
     condition: controller.enabled
+  - name: gateway
+    version: 0.1.0
+    condition: gateway.enabled

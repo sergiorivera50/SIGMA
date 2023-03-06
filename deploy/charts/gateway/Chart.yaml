@@ -1,0 +1,12 @@
+apiVersion: v2
+name: gateway
+version: 0.1.0
+description: Gateway service for the SIGMA automation framework
+type: application
+keywords:
+  - gateway
+  - sigma
+maintainers:
+  - name: Sergio Rivera
+    email: sriveralopez50@gmail.com
+    url: https://www.sergiorivera.dev

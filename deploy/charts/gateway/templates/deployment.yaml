@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sigma-{{ .Chart.Name }}-server
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: gateway
+  template:
+    metadata:
+      labels:
+        app: gateway
+    spec:
+      containers:
+        - name: gateway-server
+          image: sergiorivera50/sigma-gateway:latest
+          ports:
+            - containerPort: 8000
+          env:
+            - name: AUTH_SVC_HOST
+              value: "http://sigma-auth-service.default.svc.cluster.local:4000"
+            - name: REGISTRY_SVC_HOST
+              value: "http://sigma-registry-service.default.svc.cluster.local:5000"
