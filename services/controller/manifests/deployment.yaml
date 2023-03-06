@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{name}"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: inference-backend
+  template:
+    metadata:
+      labels:
+        app: inference-backend
+    spec:
+      containers:
+        - name: inference-backend
+          image: sergiorivera50/sigma-inference
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - secretRef:
+                name: inference-backend-secret

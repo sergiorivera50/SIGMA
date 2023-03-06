@@ -5,3 +5,7 @@ auth:
 registry:
   enabled: true
   replicaCount: 1
+
+controller:
+  enabled: true
+  replicaCount: 1

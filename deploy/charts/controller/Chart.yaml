@@ -1,0 +1,12 @@
+apiVersion: v2
+name: controller
+version: 0.1.0
+description: Controller service for the SIGMA automation framework
+type: application
+keywords:
+  - controller
+  - sigma
+maintainers:
+  - name: Sergio Rivera
+    email: sriveralopez50@gmail.com
+    url: https://www.sergiorivera.dev

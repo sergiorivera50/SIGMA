@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sigma-controller
+spec:
+  replicas: 1  # do not modify
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      application: sigma-controller
+  template:
+    metadata:
+      labels:
+        application: sigma-controller
+    spec:
+      serviceAccountName: sigma-controller-account
+      containers:
+      - name: controller
+        image: sergiorivera50/sigma-controller:latest
