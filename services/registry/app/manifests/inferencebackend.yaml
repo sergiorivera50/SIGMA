@@ -1,0 +1,6 @@
+apiVersion: inference.sigma.com/v1
+kind: InferenceBackend
+metadata:
+  name: "{model_name}"
+spec:
+  modelId: "{model_id}"

@@ -1,0 +1,60 @@
+--- # modify all namespaces if different from default !
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  namespace: default
+  name: sigma-registry-account
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: sigma-registry-role-cluster
+rules:
+  # Framework: runtime observation of namespaces & CRDs (addition/deletion).
+  - apiGroups: [apiextensions.k8s.io]
+    resources: [customresourcedefinitions]
+    verbs: [create, update, delete, patch, list, watch]
+  - apiGroups: [""]
+    resources: [namespaces]
+    verbs: [create, update, delete, patch, list, watch]
+
+  # Application: read-only access for watching cluster-wide.
+  - apiGroups: [inference.sigma.com]
+    resources: [inferencebackends]
+    verbs: [create, delete, list, watch]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: default
+  name: sigma-registry-role-namespaced
+rules:
+  - apiGroups: [inference.sigma.com]
+    resources: [inferencebackends]
+    verbs: [list, watch, create, update, delete, patch]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: sigma-registry-rolebinding-cluster
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: sigma-registry-role-cluster
+subjects:
+  - kind: ServiceAccount
+    name: sigma-registry-account
+    namespace: default
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  namespace: default
+  name: sigma-registry-rolebinding-namespaced
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: sigma-registry-role-namespaced
+subjects:
+  - kind: ServiceAccount
+    name: sigma-registry-account
