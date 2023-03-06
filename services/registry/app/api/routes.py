@@ -1,9 +1,10 @@
 import gzip
 
-from flask import Blueprint, request, jsonify
+import kubernetes
+from flask import Blueprint, request, jsonify, current_app
 from registry.app.db import get_db, get_fs
 from bson.objectid import ObjectId
-
+from registry.app.utils.kubernetes import parse_manifest
 
 bp = Blueprint("auth", __name__)
 
@@ -31,6 +32,20 @@ def register():
     fs.put(arch_file, filename=model_id + ".json")
     weigths_data = weights_file.read()
     fs.put(gzip.compress(weigths_data), filename=model_id + ".h5")
+
+    # Deploy InferenceBackend CRD resource
+    if not current_app.debug:
+        current_app.logger.info(f"Deploying InferenceBackend resource for model id {model_id}")
+        kubernetes.config.load_incluster_config()
+        inference_backend_manifest = parse_manifest("inferencebackend.yaml",
+                                                    model_name=model_name.replace('_', '-'),
+                                                    model_id=model_id)
+        api = kubernetes.client.CustomObjectsApi()
+        api.create_namespaced_custom_object(body=inference_backend_manifest,
+                                            namespace="default",
+                                            group="inference.sigma.com",
+                                            version="v1",
+                                            plural="inferencebackends")
 
     # Return the Object ID to the client
     return model_id, 201
