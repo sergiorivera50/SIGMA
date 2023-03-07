@@ -68,6 +68,7 @@ def fetch():
 
     return jsonify({
         "model_id": model_id,
+        "model_name": metadata["model_name"],
         "architecture": arch_data,
         "loss_fn": metadata["loss_fn"],
         "optimizer": metadata["optimizer"],
