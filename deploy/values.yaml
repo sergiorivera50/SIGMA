@@ -1,6 +1,7 @@
 auth:
   enabled: true
   replicaCount: 1
+  initDatabase: true
 
 registry:
   enabled: true

@@ -1,0 +1,28 @@
+{{- if .Values.initDatabase }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: init-data-job
+spec:
+  template:
+    metadata:
+      name: init-data-pod
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: init-data-container
+          image: sigma-auth:latest
+          imagePullPolicy: Never
+          command: ["flask", "init-data"]
+          volumeMounts:
+            - mountPath: /auth/data
+              name: data
+          envFrom:
+            - secretRef:
+                name: sigma-{{ .Chart.Name }}-jwt-secret
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: sigma-{{ .Chart.Name }}-pvc
+  backoffLimit: 0
+{{- end }}
