@@ -15,7 +15,8 @@ spec:
       serviceAccountName: sigma-registry-account
       containers:
         - name: registry-server
-          image: sergiorivera50/sigma-registry:latest
+          image: sigma-registry:latest
+          imagePullPolicy: Never
           ports:
             - containerPort: 5000
           envFrom:

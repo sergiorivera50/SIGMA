@@ -1,22 +1,16 @@
 #!/bin/bash
 
-# Configuration variables
-DOCKERHUB_ACCOUNT=sergiorivera50
 
 # Set the services directory for the project
 BASE_DIR=$(cd "$(dirname "$0")" && cd .. && pwd)
 SERVICES_DIR="$BASE_DIR/services"
 
-# Build and tag all Docker images
-docker build -t $DOCKERHUB_ACCOUNT/sigma-auth:latest $SERVICES_DIR/auth
-docker build -t $DOCKERHUB_ACCOUNT/sigma-registry:latest $SERVICES_DIR/registry
-docker build -t $DOCKERHUB_ACCOUNT/sigma-inference:latest $SERVICES_DIR/inference
-docker build -t $DOCKERHUB_ACCOUNT/sigma-controller:latest $SERVICES_DIR/controller
-docker build -t $DOCKERHUB_ACCOUNT/sigma-gateway:latest $SERVICES_DIR/gateway
+# Point terminal to use the docker daemon inside minikube
+eval $(minikube docker-env)
 
-# Push all Docker images
-docker push $DOCKERHUB_ACCOUNT/sigma-auth:latest
-docker push $DOCKERHUB_ACCOUNT/sigma-registry:latest
-docker push $DOCKERHUB_ACCOUNT/sigma-inference:latest
-docker push $DOCKERHUB_ACCOUNT/sigma-controller:latest
-docker push $DOCKERHUB_ACCOUNT/sigma-gateway:latest
+# Build and tag all Docker images
+docker build -t sigma-auth:latest $SERVICES_DIR/auth
+docker build -t sigma-registry:latest $SERVICES_DIR/registry
+docker build -t sigma-inference:latest $SERVICES_DIR/inference
+docker build -t sigma-controller:latest $SERVICES_DIR/controller
+docker build -t sigma-gateway:latest $SERVICES_DIR/gateway

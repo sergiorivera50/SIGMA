@@ -14,7 +14,8 @@ spec:
     spec:
       containers:
         - name: auth-server
-          image: sergiorivera50/sigma-auth:latest
+          image: sigma-auth:latest
+          imagePullPolicy: Never
           volumeMounts:
             - mountPath: /auth/data
               name: data

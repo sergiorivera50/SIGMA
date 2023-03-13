@@ -17,4 +17,5 @@ spec:
       serviceAccountName: sigma-controller-account
       containers:
       - name: controller
-        image: sergiorivera50/sigma-controller:latest
+        image: sigma-controller:latest
+        imagePullPolicy: Never

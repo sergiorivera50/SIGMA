@@ -14,7 +14,8 @@ spec:
     spec:
       containers:
         - name: gateway-server
-          image: sergiorivera50/sigma-gateway:latest
+          image: sigma-gateway:latest
+          imagePullPolicy: Never
           ports:
             - containerPort: 8000
           env:
