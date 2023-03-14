@@ -5,9 +5,6 @@
 BASE_DIR=$(cd "$(dirname "$0")" && cd .. && pwd)
 SERVICES_DIR="$BASE_DIR/services"
 
-# Point terminal to use the docker daemon inside minikube
-eval $(minikube docker-env)
-
 # Build and tag all Docker images
 docker build -t sigma-auth:latest $SERVICES_DIR/auth
 docker build -t sigma-registry:latest $SERVICES_DIR/registry

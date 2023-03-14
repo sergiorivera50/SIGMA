@@ -10,13 +10,33 @@ Synthetic Image Generation Modeling is a technique used in computer vision to cr
 
 SIGMA provides a microservice infrastructure that serves pre-trained generative adversarial models. SIGMA takes care of scaling and distributing the requests to the appropriate backends, using the pre-trained GAN models to generate the requested images. The project is designed to be flexible, scalable, and easy to use, making it an ideal choice for engineers who want to incorporate synthetic images into their projects without training their own GANs or setting up their backend infrastructure.
 
-# Local Installation
+# Usage Instruction
 
-1. Install SIGMA via Helm chart.
+**Local Installation**
+
+1. Build Docker images using Minikube's Docker daemon.
+
+```bash
+eval $(minikube docker-env) \
+&& source scripts/build.sh \
+|| eval $(minikube docker-env -u)
+```
+
+2. Install local Helm charts (review [`deploy/values.yaml`](deploy/values.yaml)).
+
 ```bash
 helm install sigma deploy/
 ```
-2. Initialise the authorization database.
+
+3. Port forward the gateway service for API requests.
 ```bash
-kubectl exec $(kubectl get pods -l app=auth -o jsonpath='{.items[0].metadata.name}') -- flask init-data
+kubectl port-forward svc/sigma-gateway-service 8000:8000
+```
+
+You may now test your connection with SIGMA at [`localhost:8000/ping`](http://localhost:8000/ping)
+
+**Cleanup**
+
+```bash
+helm uninstall sigma
 ```
