@@ -6,6 +6,11 @@ from gateway.app.util.http import make_response_class
 bp = Blueprint("auth", __name__)
 
 
+@bp.route("/ping", methods=["GET"])
+def ping():
+    return "pong", 200
+
+
 @bp.route("/deploy", methods=["POST"])
 @authorized
 def deploy():
